@@ -1,0 +1,19 @@
+targets = {
+    'fs0:/home/',
+    'fs2:/home/',
+}
+
+for _, target in ipairs( targets )
+do
+    sync {
+        default.rsync,
+        source    = "/home/",
+        target    = target,
+        delay     = 0,
+        rsync     = {
+            archive  = true,
+            compress = true,
+            rsh      = "sshpass -p root ssh  -o 'StrictHostKeyChecking no'"
+        }
+    }
+end

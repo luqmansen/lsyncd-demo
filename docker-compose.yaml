@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  fs0:
+    image: luqmansen/lsyncd-ssh
+    hostname: fs0
+    container_name: fs0
+    entrypoint: sh -c "/usr/sbin/sshd && /usr/bin/lsyncd -nodaemon -log all -insist /root/CONFIG0"
+    volumes:
+      - ./example/config/CONFIG0:/root/CONFIG0
+      - ./example/storage0/:/home/
+    expose:
+      - 22
+    ports:
+      - 22
+    restart:
+      always
+    networks:
+      - fsnet
+
+  fs1:
+    image: luqmansen/lsyncd-ssh
+    hostname: fs1
+    container_name: fs1
+    entrypoint: sh -c "/usr/sbin/sshd && /usr/bin/lsyncd -nodaemon -log all -insist /root/CONFIG1"
+    volumes:
+      - ./example/config/CONFIG1:/root/CONFIG1
+      - ./example/storage1/:/home/
+    expose:
+      - 22
+    ports:
+      - 22
+    restart:
+      always
+    networks:
+      - fsnet
+
+  fs2:
+    image: luqmansen/lsyncd-ssh
+    hostname: fs2
+    container_name: fs2
+    entrypoint: sh -c "/usr/sbin/sshd && /usr/bin/lsyncd -nodaemon -log all -insist /root/CONFIG2"
+    expose:
+      - 22
+    ports:
+      - 22
+    volumes:
+      - ./example/config/CONFIG2:/root/CONFIG2
+      - ./example/storage2/:/home/
+    restart:
+      always
+    networks:
+      - fsnet
+
+networks:
+  fsnet:
